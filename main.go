@@ -106,7 +106,7 @@ func run() error {
 				fmt.Fprintln(os.Stderr, "[jdtls-wrapper]", err.Error())
 			}
 
-			if jdtURI, ok := m[stdReq.Params.TextDocument.URI]; ok {
+			if jdtURI, ok := m[stdReq.Params.TextDocument.URI]; ok && !strings.HasPrefix(stdReq.Method, "textDocument/did") {
 				stdReq.Params.TextDocument.URI = jdtURI
 				body, _ = json.Marshal(stdReq)
 			}
