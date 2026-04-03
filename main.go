@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -107,8 +108,9 @@ func run() error {
 			}
 
 			if jdtURI, ok := m[stdReq.Params.TextDocument.URI]; ok && !strings.HasPrefix(stdReq.Method, "textDocument/did") {
-				stdReq.Params.TextDocument.URI = jdtURI
-				body, _ = json.Marshal(stdReq)
+				oldJSON, _ := json.Marshal(stdReq.Params.TextDocument.URI)
+				newJSON, _ := json.Marshal(jdtURI)
+				body = bytes.Replace(body, oldJSON, newJSON, 1)
 			}
 
 			fmt.Fprintf(serverStdin, "Content-Length: %d\r\n\r\n", len(body))
