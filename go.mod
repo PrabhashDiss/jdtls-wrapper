@@ -1,3 +1,3 @@
-module github.com/quantonganh/jdtls-wrapper
+module github.com/PrabhashDiss/jdtls-wrapper
 
 go 1.25
